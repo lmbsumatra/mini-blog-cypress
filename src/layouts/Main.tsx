@@ -23,7 +23,7 @@ export default function Main() {
           ))}
         </div>
       </nav>
-      <div>
+      <div className="overflow-y-auto">
         <Outlet />
       </div>
     </div>

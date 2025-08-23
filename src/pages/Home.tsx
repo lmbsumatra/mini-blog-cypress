@@ -4,7 +4,7 @@ import { FaBookOpen } from "react-icons/fa";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center w-full h-full  p-4">
+    <div className="flex flex-col items-center w-full h-full  p-4 ">
       <div className="max-w-100 w-full  p-4 rounded">
         <Textarea
           className="w-full  p-2 rounded"
