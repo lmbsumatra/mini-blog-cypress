@@ -1,7 +1,7 @@
 import CustomHeading from "@/components/ui/custom/CustomHeading";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -30,9 +30,12 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const logindata = useAppSelector((state) => state.login);
 
+  const navigate = useNavigate();
+
   const handleLogin = (data: loginCredsI) => {
     dispatch(login(data));
     console.log("yey", logindata);
+    navigate("/home");
   };
 
   return (
@@ -49,8 +52,11 @@ export default function Login() {
             type="text"
             placeholder="username@123"
             {...register("username")}
+            data-test-id="login-input-username"
           />
-          {errors.username?.message && <CErrorText message={errors.username.message}/>}
+          {errors.username?.message && (
+            <CErrorText message={errors.username.message} />
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <Label>Password</Label>
@@ -60,8 +66,11 @@ export default function Login() {
               type={`${showPassword === true ? "text" : "password"}`}
               placeholder="password@123"
               {...register("password")}
+              data-test-id="login-input-password"
             />
-            {errors.password?.message && <CErrorText message={errors.password.message}/>}
+            {errors.password?.message && (
+              <CErrorText message={errors.password.message} />
+            )}
             <Button
               variant="link"
               className="absolute top-0 right-0 text-white cursor-pointer"
@@ -71,15 +80,20 @@ export default function Login() {
             </Button>
           </div>
         </div>
-        <Button type="submit" variant={"outline"} className="text-neutral-900">
+        <Button
+          type="submit"
+          variant={"outline"}
+          className="text-neutral-900"
+          data-test-id="login-button"
+        >
           Log in
         </Button>
       </form>
       <div className="flex flex-col gap-1">
-        <Link to="/forgot-password" className="underline">
+        <Link to="/forgot-password" className="underline" data-test-id="login-forgot-password-link"> 
           Forgot password?
         </Link>
-        <Link to="/signup" className="underline">
+        <Link to="/signup" className="underline" data-test-id="login-signup-link">
           Sign up
         </Link>
       </div>

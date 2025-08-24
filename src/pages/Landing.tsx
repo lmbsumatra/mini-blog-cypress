@@ -4,8 +4,18 @@ import { Link } from "react-router-dom";
 
 export default function Landing() {
   const buttons = [
-    { label: "Get Started", isPrimary: true, path: "/login" },
-    { label: "Explore", isPrimary: false, path: "/preview" },
+    {
+      label: "Get Started",
+      isPrimary: true,
+      path: "/login",
+      testId: "landing-btn-1",
+    },
+    {
+      label: "Explore",
+      isPrimary: false,
+      path: "/preview",
+      testId: "landing-btn-2",
+    },
   ];
 
   return (
@@ -27,7 +37,9 @@ export default function Landing() {
                 : "bg-neutral-900 text-white"
             }`}
           >
-            <Link to={btn.path}>{btn.label}</Link>
+            <Link to={btn.path} data-test-id={btn.testId}>
+              {btn.label}
+            </Link>
           </Button>
         ))}
       </div>
