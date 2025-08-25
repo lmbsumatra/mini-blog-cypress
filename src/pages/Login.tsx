@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { login } from "@/slices/login";
 import CErrorText from "@/components/ui/custom/CErrorText";
+import Logo from "@/components/ui/Logo";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -40,6 +41,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col gap-4">
+      <Logo logo={"logoFull"} />
       <CustomHeading label={"Log in"} />
       <form
         onSubmit={handleSubmit(handleLogin)}

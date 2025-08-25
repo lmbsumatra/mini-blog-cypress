@@ -21,7 +21,7 @@ export default function Landing() {
   return (
     <div className="flex flex-col gap-4">
       <div className="text-center">
-        <CustomHeading label="Short Stories" />
+        <CustomHeading label="Anon Stories" />
         <span className="text-white/90 font-medium text-xl">
           Create. Share. Read.
         </span>

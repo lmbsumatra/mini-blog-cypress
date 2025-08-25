@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import Logo from "@/components/ui/Logo";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   return (
     <div className="flex flex-col gap-4">
+      <Logo logo={"logoFull"} />
       <CustomHeading label={"Sign up"} />
       <div className="flex flex-col gap-2">
         <Label htmlFor="username">Username</Label>
