@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "./slices/login";
+import blogReducer from "./slices/blog";
 import {
   useDispatch,
   useSelector,
@@ -7,7 +8,7 @@ import {
 } from "react-redux";
 
 export const store = configureStore({
-  reducer: { login: loginReducer },
+  reducer: { login: loginReducer, blog: blogReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -14,7 +14,7 @@ export default function Main() {
         <img src={icon} className="h-10 w-10" />
         <div className="flex gap-4 items-center">
           {tabs.map((tab) => (
-            <Link to={tab.path}>
+            <Link to={tab.path} key={tab.label}>
               <div className="hover:bg-neutral-800/20 flex gap-2 items-center py-2 px-4 rounded transition-all duration-300">
                 {tab.icon}
                 <span>{tab.label}</span>
