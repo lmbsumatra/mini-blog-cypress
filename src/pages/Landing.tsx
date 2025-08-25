@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import CustomHeading from "../components/ui/custom/CustomHeading";
 import { Link } from "react-router-dom";
+import AboutProject from "@/components/ui/AboutProject";
 
 export default function Landing() {
   const buttons = [
@@ -42,6 +43,9 @@ export default function Landing() {
             </Link>
           </Button>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <AboutProject />
       </div>
     </div>
   );
