@@ -39,9 +39,14 @@
 declare namespace Cypress {
   interface Chainable {
     getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
+    getByTestIdPrefix(prefix: string): Chainable<JQuery<HTMLElement>>;
   }
 }
 
 Cypress.Commands.add("getByTestId", (testId: string) => {
     return cy.get(`[data-test-id="${testId}"]`)
+})
+
+Cypress.Commands.add("getByTestIdPrefix", (prefix: string) => {
+  return cy.get(`[data-test-id^="${prefix}"]`)
 })

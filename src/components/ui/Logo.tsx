@@ -9,22 +9,26 @@ export default function Logo({ logo }: LogoI) {
   switch (logo) {
     case "logoOnly":
       return (
-        <div>
+        <Link to="/">
           <img src={icon} className="h-10 w-10" />
-        </div>
+        </Link>
       );
     case "logoFull":
       return (
-        <Link to="/" className="flex gap-4 items-center w-full justify-center p-4 rounded bg-white/4">
+        <Link
+          to="/"
+          data-test-id="logo-btn"
+          className="flex gap-4 items-center w-full justify-center p-4 rounded bg-white/4"
+        >
           <img src={icon} className="h-16 w-16" />
           <h1 className="text-6xl font-extrabold">Anon</h1>
         </Link>
       );
     case "textOnly":
       return (
-        <div>
+        <Link to="/">
           <CustomHeading label={"Anon Stories"} />
-        </div>
+        </Link>
       );
   }
 }

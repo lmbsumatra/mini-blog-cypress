@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
-import icon from "../assets/icon.svg";
 import { FaDoorOpen, FaHome, FaUser } from "react-icons/fa";
+import Logo from "@/components/ui/Logo";
 
 export default function Main() {
   const tabs = [
@@ -11,7 +11,7 @@ export default function Main() {
   return (
     <div className="bg-neutral-900 h-screen w-screen overflow-hidden flex flex-col  gap-4 text-white">
       <nav className="h-fit shadow-md p-4 flex items-center justify-between">
-        <img src={icon} className="h-10 w-10" />
+        <Logo logo={"logoOnly"} />
         <div className="flex gap-4 items-center">
           {tabs.map((tab) => (
             <Link to={tab.path} key={tab.label}>

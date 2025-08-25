@@ -40,6 +40,7 @@ export default function Home() {
           className="w-full  p-2 rounded"
           placeholder="What's your story?"
           aria-label="Story input"
+          data-test-id="home-input-content"
           {...register("content")}
         />
 
@@ -50,6 +51,7 @@ export default function Home() {
           type="submit"
           className="mt-2 bg-white text-neutral-900 px-4 py-2 rounded"
           variant={"outline"}
+          data-test-id="home-btn-create"
         >
           Create
         </Button>
@@ -70,6 +72,7 @@ export default function Home() {
                   size="sm"
                   onClick={() => dispatch(deleteBlog(blog.id))}
                   aria-label={`Delete blog ${blog.id}`}
+                  data-test-id={`home-btn-delete-${blog.id}`}
                 >
                   <FaTrash size={16} />
                 </Button>

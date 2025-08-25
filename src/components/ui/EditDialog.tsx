@@ -44,18 +44,18 @@ export default function EditDialog({ blog }: EditDialogI) {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger data-test-id="home-btn-edit">
         <FaEdit size={16} />
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Edit blog</DialogTitle>
         <Label>Content</Label>
-        <Input type="text" {...register("content")} />
+        <Input type="text" {...register("content")} data-test-id="home-input-edit-content"/>
         {errors.content?.message && (
           <CErrorText message={errors.content.message} />
         )}
-        <Button onClick={handleSubmit(handleBlogUpdate)}>Update</Button>
-        <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
+        <Button data-test-id="home-btn-edit-content" onClick={handleSubmit(handleBlogUpdate)}>Update</Button>
+        <Button data-test-id="home-btn-cancel-edit" onClick={(e) => handleCancel(e)}>Cancel</Button>
       </DialogContent>
     </Dialog>
   );

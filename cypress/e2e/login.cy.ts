@@ -3,6 +3,12 @@ describe("Login Page Navigation", () => {
         cy.visit("/login")
     })
 
+    it("should navigate to landing page ('/') when logo is clicked", () => {
+        cy.getByTestId("logo-btn").click()
+        cy.visit("/")
+        cy.contains("Anon Stories")
+    })
+
     it("should display the login page header", () => {
         cy.get("h1").should("contain", "Log in")
     })
