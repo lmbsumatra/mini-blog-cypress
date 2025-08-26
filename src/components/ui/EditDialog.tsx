@@ -6,11 +6,12 @@ import { type blogInputI, blogInputSchema, type blogI } from "@/types/blog";
 import { Input } from "./input";
 import { Label } from "./label";
 import { useState } from "react";
-import { editBlog } from "@/slices/blog";
+// import { editBlog } from "@/slices/blog";
 import { useAppDispatch } from "@/store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CErrorText from "./custom/CErrorText";
+import { handleEditBlog } from "@/slices/blog";
 
 interface EditDialogI {
   blog: blogI;
@@ -33,7 +34,7 @@ export default function EditDialog({ blog }: EditDialogI) {
   });
 
   const handleBlogUpdate = (data: blogInputI) => {
-    dispatch(editBlog({ id: blog.id, content: data.content }));
+    dispatch(handleEditBlog({ id: blog.id, content: data.content }));
     setOpen(false);
     reset();
   };

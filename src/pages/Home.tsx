@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import CErrorText from "@/components/ui/custom/CErrorText";
 import EditDialog from "@/components/ui/EditDialog";
 import { Textarea } from "@/components/ui/textarea";
-import { add, deleteBlog } from "@/slices/blog";
+import { handleAddBlog, handleDeleteBlog, handleFetchAll } from "@/slices/blog";
+// import { add, deleteBlog } from "@/slices/blog";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { blogInputSchema, type blogI, type blogInputI } from "@/types/blog";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaBookOpen, FaTrash } from "react-icons/fa";
 
@@ -24,11 +26,16 @@ export default function Home() {
   });
 
   const dispatch = useAppDispatch();
-  const blogs = useAppSelector((state) => state.blog);
+  const { status, blogs } = useAppSelector((state) => state.blog);
   const handleSubmitBlog = (data: blogInputI) => {
-    dispatch(add(data));
+    dispatch(handleAddBlog(data));
     reset();
   };
+
+  useEffect(() => {
+    if (status === "loading") dispatch(handleFetchAll());
+    console.log(blogs);
+  }, [status, dispatch]);
 
   return (
     <div className="flex flex-col items-center w-full h-full  p-4 ">
@@ -70,7 +77,7 @@ export default function Home() {
                 <Button
                   variant="destructive"
                   size="sm"
-                  onClick={() => dispatch(deleteBlog(blog.id))}
+                  onClick={() => dispatch(handleDeleteBlog({ id: blog.id }))}
                   aria-label={`Delete blog ${blog.id}`}
                   data-test-id={`home-btn-delete-${blog.id}`}
                 >
