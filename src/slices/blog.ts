@@ -1,6 +1,6 @@
 import { type blogArrayI, type blogI, type blogInputI, } from "@/types/blog";
+import api from "@/utils/api";
 import { createAsyncThunk, createSlice, type PayloadAction, } from "@reduxjs/toolkit";
-import axios from "axios";
 
 interface blogsStateI {
     status: 'loading' | 'succeeded' | 'failed';
@@ -10,12 +10,13 @@ interface blogsStateI {
 
 const initialState: blogsStateI = { status: "loading", blogs: [], error: null }
 
+
 export const handleFetchAll = createAsyncThunk<blogArrayI, void>(
     "blogs/fetchAll",
     async (_, { rejectWithValue }) => {
         try {
-            const res = await axios.get(`http://localhost:3000/`)
-            console.log(res.data)
+            const res = await api.get(`/api/blog/`);
+
             return res.data as blogArrayI
         } catch (error: any) {
             return rejectWithValue(error.response?.message || "Error fetching blogs")
@@ -27,8 +28,8 @@ export const handleAddBlog = createAsyncThunk<blogI, blogInputI>(
     "blogs/Add",
     async ({ content }: blogInputI, { rejectWithValue }) => {
         try {
-            const res = await axios.post(`http://localhost:3000/`, { content })
-            return res.data as blogI
+            const res = await api.post(`/api/blog/`, { content })
+            return res.data.blog as blogI
 
         } catch (error: any) {
             return rejectWithValue(error.response?.message || "Error creating blog")
@@ -43,7 +44,7 @@ export const handleEditBlog = createAsyncThunk<blogI, {
     "blogs/editBlog",
     async ({ id, content }: { id: number; content: string }, { rejectWithValue }) => {
         try {
-            const res = await axios.put(`http://localhost:3000/${id}`, { content })
+            const res = await api.put(`/api/blog/${id}`, { content })
             return res.data as blogI
         }
         catch (error: any) {
@@ -54,9 +55,11 @@ export const handleEditBlog = createAsyncThunk<blogI, {
 export const handleDeleteBlog = createAsyncThunk<blogI, { id: number }>(
     "blogs/deleteBlog",
     async ({ id }: { id: number }, { rejectWithValue }) => {
+        
         try {
-            const res = await axios.delete(`http://localhost:3000/${id}`)
-            return res.data as blogI
+            const res = await api.delete(`/api/blog/${id}`)
+           
+            return res.data
 
         } catch (error: any) {
             return rejectWithValue(error.response.message || "Error deleting blog")
@@ -74,8 +77,10 @@ const blogSlice = createSlice({
                 state.status = "loading"
             })
             .addCase(handleFetchAll.fulfilled, (state, action: PayloadAction<blogArrayI>) => {
-                state.status = "succeeded";
                 state.blogs = action.payload
+
+                state.status = "succeeded";
+
             })
             .addCase(handleFetchAll.rejected, (state, action) => {
                 state.status = "failed";
@@ -101,8 +106,11 @@ const blogSlice = createSlice({
             })
             .addCase(handleEditBlog.fulfilled, (state, action: PayloadAction<blogI>) => {
                 state.status = "succeeded";
-                state.blogs.map((blog) => { blog.id === action.payload.id ? action.payload : blog })
+                state.blogs = state.blogs.map((blog) =>
+                    blog.id === action.payload.id ? action.payload : blog
+                );
             })
+
             .addCase(handleEditBlog.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload as string;
@@ -114,8 +122,9 @@ const blogSlice = createSlice({
             })
             .addCase(handleDeleteBlog.fulfilled, (state, action: PayloadAction<blogI>) => {
                 state.status = "succeeded";
-                state.blogs.filter((blog) => { blog.id !== action.payload.id })
+                state.blogs = state.blogs.filter((blog) => blog.id !== action.payload.id);
             })
+
             .addCase(handleDeleteBlog.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload as string;
@@ -123,6 +132,5 @@ const blogSlice = createSlice({
     },
 })
 
-// export const { add, editBlog, deleteBlog } = blogSlice.actions
 
 export default blogSlice.reducer

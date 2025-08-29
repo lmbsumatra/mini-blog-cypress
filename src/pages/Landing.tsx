@@ -30,6 +30,7 @@ export default function Landing() {
       <div className="flex gap-2 text-center justify-center">
         {buttons.map((btn) => (
           <Button
+            key={btn.label}
             asChild
             variant={"outline"}
             className={`${

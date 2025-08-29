@@ -4,9 +4,9 @@ import z from "zod"
 export const blogSchema = z.object({
     id: z.number().min(1, "Blog Id is required"),
     content: z.string().min(1, "Blog content is required"),
-    isEdited: z.boolean().default(false),
-    createdAt: z.string().min(1, "Blog created at date is required"),
-    updatedAt: z.string().min(1, "Blog updated at date is required")
+    is_edited: z.boolean().default(false).optional(),
+    created_at: z.string().min(1, "Blog created at date is required"),
+    updated_at: z.string().min(1, "Blog updated at date is required")
 })
 export type blogI = z.infer<typeof blogSchema>
 

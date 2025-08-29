@@ -26,16 +26,20 @@ export default function Home() {
   });
 
   const dispatch = useAppDispatch();
-  const { status, blogs } = useAppSelector((state) => state.blog);
+  const { blogs } = useAppSelector((state) => state.blog);
   const handleSubmitBlog = (data: blogInputI) => {
     dispatch(handleAddBlog(data));
     reset();
   };
+  const isLoggedIn = useAppSelector(
+    (state) => state.login.status === "succeeded"
+  );
 
   useEffect(() => {
-    if (status === "loading") dispatch(handleFetchAll());
-    console.log(blogs);
-  }, [status, dispatch]);
+    if (isLoggedIn && blogs.length === 0) {
+      dispatch(handleFetchAll());
+    }
+  }, [isLoggedIn, blogs.length, dispatch]);
 
   return (
     <div className="flex flex-col items-center w-full h-full  p-4 ">
@@ -85,7 +89,7 @@ export default function Home() {
                 </Button>
               </div>
 
-              {blog.isEdited && (
+              {blog.is_edited && (
                 <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">
                   Edited
                 </p>
@@ -96,10 +100,10 @@ export default function Home() {
                   <strong>ID:</strong> {blog.id}
                 </p>
                 <p>
-                  <strong>Created:</strong> {blog.createdAt}
+                  <strong>Created:</strong> {blog.created_at}
                 </p>
                 <p>
-                  <strong>Updated:</strong> {blog.updatedAt}
+                  <strong>Updated:</strong> {blog.updated_at}
                 </p>
               </div>
               <div>

@@ -11,10 +11,10 @@ import { loginCredentials } from "@/types/login";
 import { type loginCredsI } from "@/types/login";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { login } from "@/slices/login";
+import { useAppDispatch } from "@/store";
 import CErrorText from "@/components/ui/custom/CErrorText";
 import Logo from "@/components/ui/Logo";
+import { loginUser } from "@/slices/login";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -29,15 +29,18 @@ export default function Login() {
   });
 
   const dispatch = useAppDispatch();
-  const logindata = useAppSelector((state) => state.login);
 
   const navigate = useNavigate();
 
-  const handleLogin = (data: loginCredsI) => {
-    dispatch(login(data));
-    console.log("yey", logindata);
-    navigate("/home");
-  };
+  const handleLogin = async(data: loginCredsI) => {
+    try {
+      await dispatch(loginUser(data)).unwrap();
+
+      navigate("/home");
+    } catch (err: any) {
+      console.error("Login failed:", err.message);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -92,10 +95,18 @@ export default function Login() {
         </Button>
       </form>
       <div className="flex flex-col gap-1">
-        <Link to="/forgot-password" className="underline" data-test-id="login-forgot-password-link"> 
+        <Link
+          to="/forgot-password"
+          className="underline"
+          data-test-id="login-forgot-password-link"
+        >
           Forgot password?
         </Link>
-        <Link to="/signup" className="underline" data-test-id="login-signup-link">
+        <Link
+          to="/signup"
+          className="underline"
+          data-test-id="login-signup-link"
+        >
           Sign up
         </Link>
       </div>
